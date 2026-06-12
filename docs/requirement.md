@@ -4,7 +4,7 @@
 **Project:** AI-Powered UMKM Customer Support Prototype  
 **Context:** WIZ.AI Builder Challenge  
 **Timeline:** 3 days  
-**Document owner:** Ivant Samuel Silaban 
+**Document owner:** Ivant Samuel Silaban  
 **Version:** 1.0  
 
 ---
@@ -170,7 +170,7 @@ Suggested structure for the Business Impact Document:
 ## 11. Risks & Limitations (to mention in the presentation)
 
 - The prototype uses mock data; real deployment requires integration with the seller's actual inventory system (which may update frequently).
-- A32-day MVP cannot fully validate guardrails against all adversarial inputs — this should be framed as "initial guardrails demonstrated, further red-teaming recommended before production."
+- A 3-day MVP cannot fully validate guardrails against all adversarial inputs — this should be framed as "initial guardrails demonstrated, further red-teaming recommended before production."
 - Real WhatsApp Business API integration involves Meta's approval process and costs that are out of scope for this prototype, but should be mentioned as a "next step."
 
 ---
