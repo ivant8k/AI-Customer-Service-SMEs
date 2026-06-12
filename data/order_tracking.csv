@@ -1,0 +1,8 @@
+resi_number,carrier,status,detail,estimated_arrival
+RESI001,JNE REG,In Transit,The package has been picked up by the courier and is on its way to the destination city.,Estimated arrival tomorrow 2026-06-14
+RESI002,SiCepat BEST,Delivered,The package was received by BUDI on 2026-06-12 at 02:32 PM.,Delivered
+RESI003,J&T Express,Processing at Warehouse,The package is being processed at the Jakarta sorting warehouse. It will be shipped soon.,Estimated arrival 2026-06-15
+RESI004,GoSend,In Transit,The driver is heading to your delivery location.,Estimated arrival today in 45 minutes
+RESI005,JNE REG,Delayed - Weather,The delivery is delayed due to weather conditions. We apologize for the inconvenience.,Estimated arrival 2026-06-16
+RESI006,SiCepat BEST,Delivery Failed - No Recipient,Delivery attempt failed because there was no recipient. The package is returned to the warehouse. Please contact JNE to reschedule.,Waiting for reschedule
+RESI007,J&T Express,Delivered,The package was received by SARI on 2026-06-11 at 10:15 AM.,Delivered

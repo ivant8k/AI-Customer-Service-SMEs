@@ -1,0 +1,16 @@
+product_id,name,variant,price,stock,category,description
+P001,Men's Linen Shirt,S / White,185000,12,Men's Tops,Premium linen shirt suitable for work or casual wear. Available in clean white.
+P002,Men's Linen Shirt,M / White,185000,8,Men's Tops,Premium linen shirt suitable for work or casual wear. Available in clean white.
+P003,Men's Linen Shirt,L / White,185000,0,Men's Tops,Premium linen shirt suitable for work or casual wear. Temporarily out of stock.
+P004,Men's Linen Shirt,M / Navy Blue,185000,5,Men's Tops,Premium linen shirt in elegant navy blue. Pairs well with chino pants.
+P005,Men's Linen Shirt,L / Navy Blue,185000,0,Men's Tops,Premium linen shirt in navy blue. Temporarily out of stock.
+P006,Oversized T-Shirt,M / Black,120000,20,Men's Tops,Oversized t-shirt made of cotton combed 30s. Large fit comfortable for all-day wear.
+P007,Oversized T-Shirt,L / Black,120000,15,Men's Tops,Oversized t-shirt made of cotton combed 30s. Large fit comfortable for all-day wear.
+P008,Oversized T-Shirt,XL / Black,120000,0,Men's Tops,Oversized t-shirt made of cotton combed 30s. XL black temporarily out of stock.
+P009,Oversized T-Shirt,M / White,120000,18,Men's Tops,Oversized t-shirt made of cotton combed 30s in white. Easy to mix and match.
+P010,Slim Chino Pants,30 / Khaki,210000,10,Men's Pants,Slim fit chino pants made of stretch fabric. Suitable for work and semi-formal occasions.
+P011,Slim Chino Pants,32 / Khaki,210000,6,Men's Pants,Slim fit chino pants made of stretch fabric. Suitable for work and semi-formal occasions.
+P012,Slim Chino Pants,34 / Khaki,210000,0,Men's Pants,Slim fit chino pants size 34 khaki. Temporarily out of stock.
+P013,Slim Chino Pants,32 / Black,210000,9,Men's Pants,Slim fit chino pants in black. Versatile for various occasions.
+P014,Canvas Tote Bag,One Size / Natural,95000,30,Accessories,Thick canvas tote bag with inner pocket. Suitable for shopping or college.
+P015,Canvas Tote Bag,One Size / Black,95000,25,Accessories,Thick canvas tote bag in black. Stylish and durable for daily use.
