@@ -1,0 +1,7 @@
+# logs directory — runtime output only, git-ignored
+# Conversation logs (logs/*.csv) are generated at runtime by src/logger.py
+# and are never committed to source control.
+#
+# To reset logs between demo runs:
+#   del logs\conversations.csv   (Windows)
+#   rm logs/conversations.csv    (Mac/Linux)
