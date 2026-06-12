@@ -1,8 +1,120 @@
-#
-## Choosen Challenge
-### UMKM Customer Service 
-Many Indonesian SMEs receive hundreds of customer inquiries every day through WhatsApp, including product information requests, pricing inquiries, delivery status checks, and payment-related questions. Build an AI-powered solution that helps automate customer support while maintaining a positive customer experience.  
-#### Deliverable
-- Working prototype
-- Demo video or presentation
-- Business impact explanation
+# AI-Powered Customer Support for Indonesian SMEs (UMKM)
+
+WIZ.AI Builder Challenge — MVP prototype of an AI chatbot that automates the most
+common WhatsApp customer-service inquiries for an Indonesian fashion UMKM, while
+maintaining an authentic "Kak/Min" conversational tone and preventing hallucination.
+
+---
+
+## Features (MVP)
+
+| Feature | Status |
+|---|---|
+| FR-01 Product inquiry (catalog + stock) | 🔲 Sprint 1 |
+| FR-02 FAQ handling (hours, payment, shipping, returns) | 🔲 Sprint 1 |
+| FR-03 Order tracking (simulated resi lookup) | 🔲 Sprint 2 |
+| FR-04 Cross-sell on out-of-stock variants | 🔲 Sprint 2 |
+| FR-05 Human handoff / escalation | 🔲 Sprint 2 |
+| FR-06 Multi-turn conversation context | 🔲 Sprint 2 |
+| FR-07 Conversation logging | 🔲 Sprint 3 |
+
+---
+
+## Project Structure
+
+```
+AI-Customer-Service-UMKM/
+├── app.py                    # Streamlit chat UI (entry point)
+├── requirements.txt
+├── .env.example              # Copy to .env and fill in API keys
+│
+├── data/
+│   ├── product_catalog.csv   # 15 mock products with variants and stock
+│   ├── faq.csv               # 12 FAQ entries (hours, payment, shipping, returns)
+│   └── order_tracking.csv    # 7 mock resi numbers with delivery statuses
+│
+├── prompts/
+│   └── system_prompt.txt     # Mimin persona + guardrail rules
+│
+├── src/
+│   ├── build_index.py        # ONE-TIME script: embed catalog+FAQ → ChromaDB
+│   ├── vector_store.py       # ChromaDB search wrapper
+│   ├── chat_engine.py        # Core RAG pipeline (intent → retrieval → LLM)
+│   └── logger.py             # Conversation logger (FR-07)
+│
+├── tests/
+│   ├── test_chat_engine.py   # FR-01 through FR-06 tests
+│   └── test_edge_cases.py    # Section 7 edge-case & guardrail tests
+│
+├── logs/                     # Runtime conversation logs (git-ignored)
+└── docs/
+    ├── requirement.md        # Full PRD + implementation plan
+    └── business_impact.md    # Business case document
+```
+
+---
+
+## Setup
+
+### 1. Clone & create virtual environment
+```bash
+git clone https://github.com/ivant8k/AI-Customer-Service-UMKM.git
+cd AI-Customer-Service-UMKM
+python -m venv .venv
+# Windows:
+.venv\Scripts\activate
+# Mac/Linux:
+source .venv/bin/activate
+```
+
+### 2. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Configure environment variables
+```bash
+cp .env.example .env
+# Edit .env and add your OPENAI_API_KEY (or GROQ_API_KEY)
+```
+
+### 4. Build the vector index (one-time)
+```bash
+python src/build_index.py
+```
+This reads `data/product_catalog.csv` and `data/faq.csv`, embeds them, and
+persists the index to `./vector_index/`. Re-run if the data files change.
+
+### 5. Run the app
+```bash
+streamlit run app.py
+```
+Open your browser at `http://localhost:8501`.
+
+---
+
+## Running Tests
+```bash
+pytest tests/ -v
+```
+
+---
+
+## Tech Stack
+
+| Layer | Choice | Reason |
+|---|---|---|
+| UI | Streamlit | Fast to build, easy to demo |
+| Orchestration | LangChain | Flexible RAG pipeline |
+| Vector store | ChromaDB (local) | No extra infra needed |
+| LLM | GPT-4o-mini (OpenAI) | Good quality/cost balance |
+| Embeddings | text-embedding-3-small | Cheap and accurate |
+| Fallback LLM | Groq (llama-3.1-8b-instant) | Fast, cheap, same API shape |
+
+---
+
+## Deliverables
+
+1. ✅ This working prototype (web-based chat app)
+2. 🔲 Demo video (3–5 min screen recording, see `docs/`)
+3. 🔲 Business impact document (`docs/business_impact.md`)

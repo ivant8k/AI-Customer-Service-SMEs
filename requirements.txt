@@ -1,0 +1,25 @@
+# --- Core RAG & Orchestration ---
+langchain==0.2.16
+langchain-community==0.2.16
+langchain-openai==0.1.25
+
+# --- Vector Store (local, no extra infra) ---
+chromadb==0.5.15
+
+# --- LLM Providers ---
+openai==1.51.0          # primary (GPT-4o-mini recommended for cost/speed balance)
+groq==0.11.0            # fallback — fast, cheap, compatible with OpenAI SDK
+
+# --- Embeddings ---
+# Uses OpenAI's text-embedding-3-small via langchain-openai above.
+# Uncomment below if you prefer a local HuggingFace model instead:
+# sentence-transformers==3.1.1
+
+# --- Chat UI ---
+streamlit==1.38.0
+
+# --- Data handling ---
+pandas==2.2.3
+
+# --- Utilities ---
+python-dotenv==1.0.1    # loads .env into os.environ
