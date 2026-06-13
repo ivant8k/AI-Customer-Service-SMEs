@@ -1,7 +1,7 @@
 # Product Requirements Document (PRD)
-## AI-Powered Customer Support for Indonesian SMEs (UMKM) — MVP
+## AI-Powered Customer Support for SMEs — MVP
 
-**Project:** AI-Powered UMKM Customer Support Prototype  
+**Project:** AI-Powered SME Customer Support Prototype  
 **Context:** WIZ.AI Builder Challenge  
 **Timeline:** 3 days  
 **Document owner:** Ivant Samuel Silaban  
@@ -11,9 +11,9 @@
 
 ## 1. Executive Summary
 
-Indonesian SMEs (UMKM) typically receive hundreds of WhatsApp messages per day covering product inquiries, pricing, order/delivery status, and payment questions. Most of this volume is repetitive and can be safely automated, but customers still expect a fast, warm, and "human-feeling" response.
+SMEs typically receive hundreds of WhatsApp messages per day covering product inquiries, pricing, order/delivery status, and payment questions. Most of this volume is repetitive and can be safely automated, but customers still expect a fast, warm, and "human-feeling" response.
 
-This project delivers a working AI chatbot prototype that automates the most common categories of customer inquiries while preserving the friendly, conversational tone Indonesian customers expect from small-business sellers ("Kak/Min" style). The system is built with strict guardrails so it never invents products, prices, discounts, or policies, and it knows when to hand off to a human agent.
+This project delivers a working AI chatbot prototype that automates the most common categories of customer inquiries while preserving the friendly, conversational tone customers expect from small-business sellers. The system is built with strict guardrails so it never invents products, prices, discounts, or policies, and it knows when to hand off to a human agent.
 
 The goal of this MVP is not full production deployment, but a credible, demoable proof of concept that clearly shows: (1) the AI can correctly handle realistic, messy, real-world inputs, and (2) the business value of automating this layer of support is significant and measurable.
 
@@ -22,21 +22,21 @@ The goal of this MVP is not full production deployment, but a credible, demoable
 ## 2. Problem Statement & Goals
 
 ### 2.1 Problem
-- Customer service for UMKM is largely manual (1 admin handling WhatsApp chats), creating slow response times, inconsistent answers, and limited availability (business hours only).
+- Customer service for SMEs is largely manual (1 admin handling WhatsApp chats), creating slow response times, inconsistent answers, and limited availability (business hours only).
 - A large share of incoming messages are repetitive (stock, price, hours, delivery status), taking time away from high-value tasks like closing sales or handling complaints.
 - Admins may give inconsistent or inaccurate answers about stock/price under time pressure, hurting trust.
 
 ### 2.2 Goals for the MVP
 - Automate the top recurring inquiry types (product info, FAQ, order tracking, cross-sell) with high accuracy.
-- Maintain a tone and persona consistent with how Indonesian UMKM sellers communicate.
+- Maintain a friendly and helpful tone and persona consistent with how SME sellers communicate.
 - Prevent hallucination of products, prices, discounts, or policies (a critical trust and legal risk for any business).
 - Detect situations the AI should not handle (complaints, negative sentiment, out-of-scope topics, manipulation attempts) and escalate gracefully to a human.
 - Demonstrate a clear, honest business case for adoption — without inflating numbers.
 
 ### 2.3 Non-Goals (Out of Scope for this MVP)
 - Real payment processing or order placement (simulated only).
-- Real WhatsApp Business API integration (a sandbox/web simulation is acceptable given the 2-day timeline).
-- Multi-language support beyond Bahasa Indonesia (and Indonesian-English code-switching, which is common in casual chat).
+- Real WhatsApp Business API integration (a sandbox/web simulation is acceptable given the 3-day timeline).
+- Multi-language support beyond English.
 - Multi-tenant support for multiple stores (single demo store is sufficient).
 
 ---
@@ -49,17 +49,17 @@ The goal of this MVP is not full production deployment, but a credible, demoable
 |---|---|---|
 | **FR-01** | Product Inquiry (Catalog & Stock) | Understands questions about products and returns accurate info on availability, price, variants, and short description, sourced only from the product catalog (no invented data). |
 | **FR-02** | FAQ Handling | Answers standard operational questions: business hours, payment methods, store location, shipping options, and return/refund policy, sourced from a FAQ knowledge base. |
-| **FR-03** | Order Tracking (Simulated) | Detects a tracking/receipt number (resi) in the user's message and returns the corresponding delivery status from a mock dataset. |
+| **FR-03** | Order Tracking (Simulated) | Detects a tracking/receipt number in the user's message and returns the corresponding delivery status from a mock dataset. |
 | **FR-04** | Cross-Selling | When the requested product/variant is out of stock, automatically suggests a relevant in-stock alternative from the catalog. |
 | **FR-05** | Human Handoff / Escalation | Detects complaints, negative sentiment, requests outside the bot's scope, or repeated failed attempts, and responds with a clear handoff message indicating a human agent will follow up. |
-| **FR-06** (new) | Multi-turn Context | Maintains context across a short conversation (e.g., "Ada warna lain?" referring to the product mentioned two messages earlier), not just single-turn Q&A. |
+| **FR-06** (new) | Multi-turn Context | Maintains context across a short conversation (e.g., "Are there other colors?" referring to the product mentioned two messages earlier), not just single-turn Q&A. |
 | **FR-07** (new) | Conversation Logging | Logs each conversation (intent detected, response given, escalation flag) to support the business-impact analysis and future fine-tuning. |
 
 ### 3.2 Non-Functional Requirements
 
 | ID | Requirement | Description |
 |---|---|---|
-| **NFR-01** | Tone & Persona | Responses use a warm, polite Indonesian SME customer-service style ("Kak", "Min", emoji used sparingly), consistent across all answers. |
+| **NFR-01** | Tone & Persona | Responses use a warm, polite SME customer-service style (emoji used sparingly), consistent across all answers. |
 | **NFR-02** | Guardrails / Anti-Hallucination | The system must never invent products, prices, discounts, stock levels, or policies. All factual claims must trace back to the provided catalog/FAQ/order data. Out-of-scope topics (politics, general knowledge, unrelated requests) are politely declined. |
 | **NFR-03** | Latency | Target response time under 5 seconds from message received to response generated, under normal load for the demo. |
 | **NFR-04** (new) | Transparency of Escalation | When handing off to a human, the bot clearly tells the customer this is happening (no silent failures or vague non-answers). |
@@ -73,7 +73,7 @@ Small, mock datasets are sufficient for the MVP, in `.csv` or `.json` format:
 
 1. **Product Catalog** — Product ID, Name, Variant/Size, Price, Stock Quantity, Short Description, (optional) Category — used for cross-sell matching.
 2. **FAQ Knowledge Base** — Question/topic, Answer, (optional) Category (e.g., shipping, payment, store info, returns).
-3. **Order/Shipping Status** — Mock mapping of tracking numbers to statuses (e.g., `RESI123 → "Sedang dikirim oleh kurir, estimasi tiba besok"`).
+3. **Order/Shipping Status** — Mock mapping of tracking numbers to statuses (e.g., `RESI123 → "Being delivered by courier, estimated arrival tomorrow"`).
 4. **Conversation Log (output)** — Generated during testing/demo: timestamp, user message, detected intent, bot response, escalated (Y/N).
 
 *Recommendation:* keep each dataset small but realistic (10–20 products, 10–15 FAQ entries, 5–10 mock tracking numbers) — enough to demonstrate range without slowing down development.
@@ -104,11 +104,11 @@ This separation (intent routing → retrieval → constrained generation) is wha
 
 It's worth scripting 4–6 short example conversations to use in the demo video, covering both "happy path" and edge cases:
 
-1. **Product inquiry (happy path):** "Kak, baju ukuran M warna biru masih ada?" → bot returns stock, price, short description.
+1. **Product inquiry (happy path):** "Hi, is the blue size M shirt still available?" → bot returns stock, price, short description.
 2. **Cross-sell:** Customer asks about an out-of-stock variant → bot informs it's out of stock and suggests an in-stock alternative.
-3. **FAQ:** "Kalau order hari ini, sampe kapan ya?" → bot answers from shipping FAQ.
-4. **Order tracking:** Customer sends a resi number → bot returns mock status.
-5. **Escalation (complaint):** "Barang saya rusak nih, kecewa banget" → bot acknowledges, apologizes, and hands off to a human agent.
+3. **FAQ:** "If I order today, when will it arrive?" → bot answers from shipping FAQ.
+4. **Order tracking:** Customer sends a tracking number → bot returns mock status.
+5. **Escalation (complaint):** "My item is broken, I'm very disappointed" → bot acknowledges, apologizes, and hands off to a human agent.
 6. **Guardrail test:** Customer asks for a discount not in the catalog, or asks an off-topic question (e.g., politics), or attempts a prompt injection → bot politely declines per the rules in Section 7.
 
 ---
@@ -117,28 +117,30 @@ It's worth scripting 4–6 short example conversations to use in the demo video,
 
 | Scenario | Expected Behavior |
 |---|---|
-| **Slang / typos / abbreviations** | The LLM should infer intent despite typos or informal abbreviations (e.g., "bsk dkirim pke gosend bs?" → understood as "Can it be shipped via GoSend tomorrow?"). |
-| **Ambiguous query (missing context)** | The bot does not guess. It asks for clarification, e.g., *"Boleh sebutkan nama/varian produk yang Kakak maksud, ya Kak?"* |
-| **Prompt injection** | The bot ignores instructions embedded in user messages that attempt to override its persona or rules, and responds with something like: *"Maaf Kak, aku cuma bisa bantu soal produk dan pesanan di toko ini ya."* |
-| **Pressure for unlisted discounts** | The bot politely holds the line: *"Mohon maaf Kak, untuk harga sudah net sesuai yang tertera ya."* |
+| **Slang / typos / abbreviations** | The LLM should infer intent despite typos or informal abbreviations (e.g., "can u snd tmrw via gosend?" → understood as "Can it be shipped via GoSend tomorrow?"). |
+| **Ambiguous query (missing context)** | The bot does not guess. It asks for clarification, e.g., *"Could you please specify the product name or variant you mean?"* |
+| **Prompt injection** | The bot ignores instructions embedded in user messages that attempt to override its persona or rules, and responds with something like: *"I'm sorry, I can only help with questions about products and orders at this store."* |
+| **Pressure for unlisted discounts** | The bot politely holds the line: *"I'm sorry, but our prices are final as listed."* |
 | **Negative sentiment / complaint** | The bot acknowledges the feeling, apologizes briefly, and escalates to a human — it does not attempt to resolve complaints itself. |
 | **Out-of-scope topics** (politics, general knowledge, unrelated requests) | The bot politely declines and redirects to store-related topics. |
 
 ---
 
-## 8. Two-Day Implementation Plan (Suggested)
+## 8. Three-Day Implementation Plan (Suggested)
 
-This is a suggested breakdown — adjust based on your actual pace. The main risk in a 2-day build is usually scope creep, so the priority order matters more than exact timing.
+This is a suggested breakdown — adjust based on your actual pace. The main risk in a 3-day build is usually scope creep, so the priority order matters more than exact timing.
 
 **Day 1**
 - Set up project structure, prepare mock datasets (catalog, FAQ, tracking).
 - Build the retrieval layer (vector store for catalog + FAQ).
 - Build the basic chat UI (Streamlit/Gradio) with a simple persona prompt.
-- Implement FR-01 and FR-02 (product inquiry + FAQ) end-to-end and test with realistic messy inputs.
 
 **Day 2**
-- Implement FR-03 (order tracking), FR-04 (cross-sell), FR-05 (escalation detection).
-- Implement guardrails (NFR-02) and test against the edge cases in Section 7.
+- Implement FR-01 and FR-02 (product inquiry + FAQ) end-to-end and test with realistic messy inputs.
+- Implement FR-03 (order tracking), FR-04 (cross-sell).
+- Implement FR-05 (escalation detection) and guardrails (NFR-02), then test against the edge cases in Section 7.
+
+**Day 3**
 - Add conversation logging (FR-07) for the business-impact analysis.
 - Record the demo video and finalize the business impact document.
 - Buffer time for bug fixes and polish.
@@ -148,14 +150,14 @@ This is a suggested breakdown — adjust based on your actual pace. The main ris
 ## 9. Deliverables
 
 1. **Working Prototype** — A web-based chat application (or sandbox chat) that can be tested live, demonstrating FR-01 through FR-07.
-2. **Demo Video / Presentation** (3–5 minutes) — A screen recording showing both normal use cases and edge cases (Section 6), narrated to explain what's happening and why it matters for an UMKM owner.
+2. **Demo Video / Presentation** (3–5 minutes) — A screen recording showing both normal use cases and edge cases (Section 6), narrated to explain what's happening and why it matters for an SME owner.
 3. **Business Impact Document** — A short explanation of the expected operational benefits (Section 10), framed honestly as estimates to be validated with real data.
 
 ---
 
 ## 10. Business Impact (Framing Notes)
 
-This section should explain *why* this matters to an UMKM owner, but the numbers used should be presented as estimates/assumptions, not as proven facts — both because this is a prototype (no production data yet) and because real impact varies a lot by business size, message volume, and how many inquiries are actually automatable.
+This section should explain *why* this matters to an SME owner, but the numbers used should be presented as estimates/assumptions, not as proven facts — both because this is a prototype (no production data yet) and because real impact varies a lot by business size, message volume, and how many inquiries are actually automatable.
 
 Suggested structure for the Business Impact Document:
 

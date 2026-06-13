@@ -15,7 +15,7 @@ Pipeline (per message):
 Handles FR-01 through FR-06 and NFR-01 through NFR-05.
 
 Environment variables required (see .env.example):
-    OPENAI_API_KEY (or GROQ_API_KEY if LLM_PROVIDER=groq)
+    GROQ_API_KEY
     LLM_PROVIDER, LLM_MODEL
     MAX_HISTORY_TURNS  (default: 5)
 """
@@ -24,19 +24,19 @@ Environment variables required (see .env.example):
 #   Step 1 — Intent router
 #       - Lightweight classification: keyword heuristics first (fast, free),
 #         fall back to a short LLM call only if ambiguous.
-#       - Resi pattern detection (FR-03): regex for RESI\w+ or similar numeric patterns.
+#       - Tracking pattern detection (FR-03): regex for RESI\w+ or similar numeric patterns.
 #       - Escalation signals (FR-05): keywords for complaint/frustration + sentiment check.
 #
 #   Step 2 — Retrieval (per intent)
 #       - PRODUCT_INQUIRY / FAQ → vector_store.search() against "catalog" / "faq" collection
-#       - ORDER_TRACKING        → exact resi lookup in data/order_tracking.csv (no vector needed)
+#       - ORDER_TRACKING        → exact tracking lookup in data/order_tracking.csv (no vector needed)
 #       - ESCALATION / OUT_OF_SCOPE → no retrieval, use hardcoded response template from prompt
 #
 #   Step 3 — Generation
 #       - Load system_prompt.txt once at module import (not per call)
 #       - Build messages list: [system, ...history[-MAX_HISTORY_TURNS:], user]
 #       - Inject retrieved context as an assistant-facing block before the user message
-#       - Call LLM (OpenAI or Groq based on LLM_PROVIDER)
+#       - Call Groq LLM using llama-3.1-8b-instant
 #       - Return response string + metadata dict {intent, sources, escalated}
 #
 #   Step 4 — Logging

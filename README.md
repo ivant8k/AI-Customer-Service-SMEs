@@ -1,8 +1,8 @@
-# AI-Powered Customer Support for Indonesian SMEs (UMKM)
+# AI-Powered Customer Support for SMEs
 
 WIZ.AI Builder Challenge — MVP prototype of an AI chatbot that automates the most
-common WhatsApp customer-service inquiries for an Indonesian fashion UMKM, while
-maintaining an authentic "Kak/Min" conversational tone and preventing hallucination.
+common WhatsApp customer-service inquiries for a fashion SME, while
+maintaining an authentic friendly conversational tone and preventing hallucination.
 
 ---
 
@@ -12,7 +12,7 @@ maintaining an authentic "Kak/Min" conversational tone and preventing hallucinat
 |---|---|
 | FR-01 Product inquiry (catalog + stock) | 🔲 Sprint 1 |
 | FR-02 FAQ handling (hours, payment, shipping, returns) | 🔲 Sprint 1 |
-| FR-03 Order tracking (simulated resi lookup) | 🔲 Sprint 2 |
+| FR-03 Order tracking (simulated tracking lookup) | 🔲 Sprint 2 |
 | FR-04 Cross-sell on out-of-stock variants | 🔲 Sprint 2 |
 | FR-05 Human handoff / escalation | 🔲 Sprint 2 |
 | FR-06 Multi-turn conversation context | 🔲 Sprint 2 |
@@ -31,10 +31,10 @@ AI-Customer-Service-UMKM/
 ├── data/
 │   ├── product_catalog.csv   # 15 mock products with variants and stock
 │   ├── faq.csv               # 12 FAQ entries (hours, payment, shipping, returns)
-│   └── order_tracking.csv    # 7 mock resi numbers with delivery statuses
+│   └── order_tracking.csv    # 7 mock tracking numbers with delivery statuses
 │
 ├── prompts/
-│   └── system_prompt.txt     # Mimin persona + guardrail rules
+│   └── system_prompt.txt     # Benny persona + guardrail rules
 │
 ├── src/
 │   ├── build_index.py        # ONE-TIME script: embed catalog+FAQ → ChromaDB
@@ -75,7 +75,7 @@ pip install -r requirements.txt
 ### 3. Configure environment variables
 ```bash
 cp .env.example .env
-# Edit .env and add your OPENAI_API_KEY (or GROQ_API_KEY)
+# Edit .env and add your GROQ_API_KEY
 ```
 
 ### 4. Build the vector index (one-time)
@@ -107,9 +107,8 @@ pytest tests/ -v
 | UI | Streamlit | Fast to build, easy to demo |
 | Orchestration | LangChain | Flexible RAG pipeline |
 | Vector store | ChromaDB (local) | No extra infra needed |
-| LLM | GPT-4o-mini (OpenAI) | Good quality/cost balance |
-| Embeddings | text-embedding-3-small | Cheap and accurate |
-| Fallback LLM | Groq (llama-3.1-8b-instant) | Fast, cheap, same API shape |
+| LLM | Groq llama-3.1-8b-instant | Fast, low-cost chat model for the MVP |
+| Embeddings | sentence-transformers/all-MiniLM-L6-v2 | Local semantic retrieval without OpenAI |
 
 ---
 

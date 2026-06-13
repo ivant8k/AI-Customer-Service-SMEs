@@ -7,9 +7,9 @@ Run with:
     streamlit run app.py
 
 Layout:
-    - Header bar: store name "Fashion Store 🛍️" + "Alex" bot avatar
+    - Header bar: store name "Fashion Store 🛍️" + "Benny" bot avatar
     - Chat message area: scrollable, WhatsApp-inspired bubbles
-      (user right-aligned, bot left-aligned with Alex avatar)
+      (user right-aligned, bot left-aligned with Benny avatar)
     - Collapsible "📎 Source" section below each bot response (NFR-05 auditability)
     - Escalation responses shown with a distinct 🔴 visual indicator
     - Text input + Send button at the bottom
