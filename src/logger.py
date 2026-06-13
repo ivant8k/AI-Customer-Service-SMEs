@@ -20,11 +20,66 @@ Environment variables required (see .env.example):
     CONVERSATION_LOG_PATH  (default: ./logs/conversations.csv)
 """
 
-# TODO (Story 3.1): implement logger
-#   1. On first call, check if CONVERSATION_LOG_PATH exists.
-#      If not, create the file and write the CSV header row.
-#   2. Append one row per call — never overwrite, always append.
-#   3. Thread-safe write (use a file lock or queue) in case of future async use.
-#
-# Public interface:
-#   log_turn(session_id, user_message, intent, bot_response, escalated, sources) -> None
+from __future__ import annotations
+
+import csv
+import os
+import threading
+from datetime import datetime, timezone
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+ROOT_DIR = Path(__file__).resolve().parents[1]
+load_dotenv(ROOT_DIR / ".env")
+
+_CSV_COLUMNS = [
+    "timestamp",
+    "session_id",
+    "user_message",
+    "detected_intent",
+    "bot_response",
+    "escalated",
+    "retrieved_source",
+]
+
+_write_lock = threading.Lock()
+
+
+def _log_path() -> Path:
+    raw = os.getenv("CONVERSATION_LOG_PATH", "./logs/conversations.csv")
+    path = Path(raw)
+    if not path.is_absolute():
+        path = ROOT_DIR / path
+    return path
+
+
+def log_turn(
+    session_id: str,
+    user_message: str,
+    intent: str,
+    bot_response: str,
+    escalated: bool,
+    sources: list[str],
+) -> None:
+    log_file = _log_path()
+    log_file.parent.mkdir(parents=True, exist_ok=True)
+
+    row = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "session_id": session_id,
+        "user_message": user_message,
+        "detected_intent": intent,
+        "bot_response": bot_response,
+        "escalated": "Y" if escalated else "N",
+        "retrieved_source": "|".join(sources),
+    }
+
+    write_header = not log_file.exists() or log_file.stat().st_size == 0
+
+    with _write_lock:
+        with log_file.open("a", encoding="utf-8", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=_CSV_COLUMNS)
+            if write_header:
+                writer.writeheader()
+            writer.writerow(row)
