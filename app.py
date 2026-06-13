@@ -239,6 +239,14 @@ def _render_messages() -> None:
             # NFR-05 auditability: collapsible source expander
             if sources:
                 with st.expander("📎 Source", expanded=False):
+                    conf = meta.get("retrieval_confidence")
+                    if conf is not None:
+                        conf_color = "#2E7D32" if conf >= 0.5 else ("#E65100" if conf >= 0.25 else "#C62828")
+                        st.markdown(
+                            f'<span style="font-size:11px;color:{conf_color};font-weight:600;">'
+                            f'Retrieval confidence: {conf:.0%}</span>',
+                            unsafe_allow_html=True,
+                        )
                     for src in sources:
                         st.markdown(f"- `{src}`")
 
@@ -284,6 +292,7 @@ if user_input and user_input.strip():
                 "intent": result["intent"],
                 "sources": result["sources"],
                 "escalated": result["escalated"],
+                "retrieval_confidence": result.get("retrieval_confidence"),
             }
         except Exception as exc:
             bot_response = (
