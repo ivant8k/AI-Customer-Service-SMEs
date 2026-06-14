@@ -43,33 +43,32 @@ _ID_TO_EN: list[tuple[re.Pattern, str]] = [
     (re.compile(r"\bsepatu\b", re.I), "shoes"),
     (re.compile(r"\bjaket\b", re.I), "jacket"),
     (re.compile(r"\bkemeja\b", re.I), "shirt"),
-    (re.compile(r"\blinen\b", re.I), "linen"),           # already English — keep
-    (re.compile(r"\bchino\b", re.I), "chino"),           # already English — keep
     # Attributes
     (re.compile(r"\bharga\b", re.I), "price"),
-    (re.compile(r"\bhrga\b", re.I), "price"),            # common typo
+    (re.compile(r"\bhrga\b", re.I), "price"), 
     (re.compile(r"\bstok\b", re.I), "stock"),
-    (re.compile(r"\bstock\b", re.I), "stock"),
     (re.compile(r"\bwarna\b", re.I), "color"),
     (re.compile(r"\bukuran\b", re.I), "size"),
-    (re.compile(r"\bukran\b", re.I), "size"),            # typo
+    (re.compile(r"\bukran\b", re.I), "size"), 
     (re.compile(r"\bvarian\b", re.I), "variant"),
     (re.compile(r"\btersedia\b", re.I), "available"),
-    (re.compile(r"\bada\b", re.I), "available"),         # "ada ga?" → "available?"
-    (re.compile(r"\bgak?\b", re.I), ""),                 # filler "ga / gak" → drop
-    (re.compile(r"\bngga[kh]?\b", re.I), ""),            # "nggak" → drop
+    (re.compile(r"\bada\b", re.I), "available"),
+    (re.compile(r"\bgak?\b", re.I), ""),
+    (re.compile(r"\bngga[kh]?\b", re.I), ""),
+    (re.compile(r"\b(min|kak|gan|bro|sis)\b", re.I), ""),
     # Colors
     (re.compile(r"\bhitam\b", re.I), "black"),
     (re.compile(r"\bputih\b", re.I), "white"),
-    # NOTE: "item" (Indonesian slang for black) is handled separately in normalize()
-    #       because it collides with the English word "item".
-    (re.compile(r"\biru\b", re.I), "blue"),
+    (re.compile(r"\bbiru\b", re.I), "blue"), 
     (re.compile(r"\bmerah\b", re.I), "red"),
     (re.compile(r"\bcoklat\b", re.I), "brown"),
-    (re.compile(r"\babu.abu\b", re.I), "grey"),
-    # FAQ / store ops
+    (re.compile(r"\babu[-. ]?abu\b", re.I), "grey"),
+    (re.compile(r"\bhijau\b", re.I), "green"),
+    (re.compile(r"\bkuning\b", re.I), "yellow"),
+    # FAQ / store ops / verbs
     (re.compile(r"\bpengiriman\b", re.I), "shipping"),
     (re.compile(r"\bkirim\b", re.I), "shipping"),
+    (re.compile(r"\bongkir\b", re.I), "shipping fee"), 
     (re.compile(r"\bpembayaran\b", re.I), "payment"),
     (re.compile(r"\bbayar\b", re.I), "payment"),
     (re.compile(r"\bpengembalian\b", re.I), "return"),
@@ -78,16 +77,18 @@ _ID_TO_EN: list[tuple[re.Pattern, str]] = [
     (re.compile(r"\bbuka\b", re.I), "open"),
     (re.compile(r"\btutup\b", re.I), "close"),
     (re.compile(r"\balamat\b", re.I), "address"),
-    (re.compile(r"\blomba\b", re.I), "location"),
+    (re.compile(r"\blokasi|tempat\b", re.I), "location"),
     (re.compile(r"\bgaransi\b", re.I), "warranty"),
-    (re.compile(r"\bberapa\b", re.I), "how much"),       # "berapa harga" → "how much price"
+    (re.compile(r"\bberapa\b", re.I), "how much"),
+    (re.compile(r"\bbrp\b", re.I), "how much"), 
     (re.compile(r"\bkapan\b", re.I), "when"),
     (re.compile(r"\bdimana\b", re.I), "where"),
     (re.compile(r"\bbisa\b", re.I), "can"),
     (re.compile(r"\bboleh\b", re.I), "can"),
     (re.compile(r"\btolong\b", re.I), "please"),
-    (re.compile(r"\bmau\b", re.I), "want"),
+    (re.compile(r"\bmau|peng[e|i]n\b", re.I), "want"),
     (re.compile(r"\bbantu\b", re.I), "help"),
+    (re.compile(r"\bbeli|pesan\b", re.I), "buy"), 
 ]
 
 # Common English typo corrections (domain-specific)
@@ -98,20 +99,15 @@ _TYPO_FIXES: list[tuple[re.Pattern, str]] = [
     (re.compile(r"\bpant's\b", re.I), "pants"),
     (re.compile(r"\bavalaible\b", re.I), "available"),
     (re.compile(r"\bavaible\b", re.I), "available"),
-    (re.compile(r"\bavailable\b", re.I), "available"),   # correct — keep
     (re.compile(r"\bdeliverry\b", re.I), "delivery"),
-    (re.compile(r"\bdelivery\b", re.I), "delivery"),     # correct — keep
-    (re.compile(r"\bshipping\b", re.I), "shipping"),     # correct — keep
     (re.compile(r"\bpayement\b", re.I), "payment"),
     (re.compile(r"\brefudn\b", re.I), "refund"),
     (re.compile(r"\bretrun\b", re.I), "return"),
     (re.compile(r"\bcanvass\b", re.I), "canvas"),
-    (re.compile(r"\boversized\b", re.I), "oversized"),   # correct — keep
     (re.compile(r"\bchiino\b", re.I), "chino"),
     (re.compile(r"\bchiinos\b", re.I), "chino"),
     (re.compile(r"\blinne?n\b", re.I), "linen"),
     (re.compile(r"\bwharehouse\b", re.I), "warehouse"),
-    (re.compile(r"\bprice\b", re.I), "price"),           # correct — keep
     (re.compile(r"\bprce\b", re.I), "price"),
     (re.compile(r"\bpirce\b", re.I), "price"),
     (re.compile(r"\bstoc?k\b", re.I), "stock"),
