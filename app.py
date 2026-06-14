@@ -58,93 +58,116 @@ st.markdown(
     <style>
     /* ── Global ── */
     body, [data-testid="stAppViewContainer"] {
-        background-color: #ECE5DD;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background-color: #F9FAFB;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     /* ── Header ── */
     .chat-header {
-        background: linear-gradient(135deg, #075E54, #128C7E);
-        color: white;
-        padding: 14px 20px;
-        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        color: #111827;
+        padding: 16px 24px;
+        border-radius: 16px;
         display: flex;
         align-items: center;
-        gap: 14px;
-        margin-bottom: 20px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        gap: 16px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
     .chat-header .avatar {
-        background: #25D366;
+        background: linear-gradient(135deg, #6366F1, #8B5CF6);
+        color: white;
         border-radius: 50%;
-        width: 46px;
-        height: 46px;
+        width: 50px;
+        height: 50px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 22px;
+        font-size: 24px;
         flex-shrink: 0;
+        box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
     }
     .chat-header .store-name {
-        font-size: 18px;
+        font-size: 19px;
         font-weight: 700;
-        letter-spacing: 0.3px;
+        letter-spacing: -0.02em;
     }
     .chat-header .store-sub {
-        font-size: 12px;
-        opacity: 0.85;
-        margin-top: 2px;
+        font-size: 13px;
+        color: #6B7280;
+        margin-top: 3px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .chat-header .status-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #10B981;
+        border-radius: 50%;
+        display: inline-block;
+        box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
     }
 
     /* ── Message bubbles ── */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
     .bubble-row {
         display: flex;
-        margin-bottom: 8px;
+        margin-bottom: 16px;
+        animation: fadeIn 0.3s ease-out forwards;
     }
     .bubble-row.user   { justify-content: flex-end; }
     .bubble-row.bot    { justify-content: flex-start; }
 
     .bubble {
-        max-width: 72%;
-        padding: 10px 14px;
-        border-radius: 12px;
-        font-size: 14.5px;
+        max-width: 75%;
+        padding: 12px 16px;
+        border-radius: 18px;
+        font-size: 15px;
         line-height: 1.5;
         position: relative;
         word-wrap: break-word;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.04);
     }
     .bubble.user {
-        background: #DCF8C6;
-        border-bottom-right-radius: 3px;
-        color: #111;
+        background: linear-gradient(135deg, #3B82F6, #2563EB);
+        color: white;
+        border-bottom-right-radius: 4px;
     }
     .bubble.bot {
-        background: #ffffff;
-        border-bottom-left-radius: 3px;
-        color: #111;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+        background: white;
+        color: #1F2937;
+        border-bottom-left-radius: 4px;
+        border: 1px solid #E5E7EB;
     }
     .bubble.escalated {
-        border-left: 4px solid #e53935;
+        border-left: 4px solid #EF4444;
     }
 
     /* ── Intent badge ── */
     .intent-badge {
         display: inline-block;
-        font-size: 10.5px;
+        font-size: 11px;
         font-weight: 600;
-        padding: 2px 7px;
-        border-radius: 10px;
-        margin-bottom: 5px;
-        letter-spacing: 0.5px;
+        padding: 4px 8px;
+        border-radius: 12px;
+        margin-bottom: 8px;
+        letter-spacing: 0.05em;
         text-transform: uppercase;
     }
-    .badge-PRODUCT_INQUIRY  { background:#E3F2FD; color:#1565C0; }
-    .badge-FAQ               { background:#E8F5E9; color:#2E7D32; }
-    .badge-ORDER_TRACKING    { background:#FFF3E0; color:#E65100; }
-    .badge-ESCALATION        { background:#FFEBEE; color:#C62828; }
-    .badge-CLARIFICATION     { background:#F3E5F5; color:#6A1B9A; }
-    .badge-OUT_OF_SCOPE      { background:#ECEFF1; color:#37474F; }
+    .badge-PRODUCT_INQUIRY  { background:#E0F2FE; color:#0369A1; }
+    .badge-FAQ               { background:#DCFCE7; color:#15803D; }
+    .badge-ORDER_TRACKING    { background:#FFEDD5; color:#C2410C; }
+    .badge-ESCALATION        { background:#FEE2E2; color:#B91C1C; }
+    .badge-CLARIFICATION     { background:#F3E8FF; color:#7E22CE; }
+    .badge-OUT_OF_SCOPE      { background:#F3F4F6; color:#374151; }
 
     /* ── Hide default Streamlit elements we don't need ── */
     #MainMenu, footer, [data-testid="stToolbar"] { visibility: hidden; }
@@ -173,10 +196,10 @@ if "messages" not in st.session_state:
 st.markdown(
     """
     <div class="chat-header">
-        <div class="avatar">🛍️</div>
+        <div class="avatar">✨</div>
         <div>
             <div class="store-name">Fashion Store</div>
-            <div class="store-sub">🟢 Benny — Customer Service · Online now</div>
+            <div class="store-sub"><span class="status-dot"></span> Benny — Customer Service · Online now</div>
         </div>
     </div>
     """,
@@ -272,6 +295,14 @@ if user_input and user_input.strip():
         "content": user_text,
         "metadata": {},
     })
+
+    # Render the user message immediately so it's visible before the bot replies
+    st.markdown(
+        f'<div class="bubble-row user">'
+        f'<div class="bubble user">{user_text}</div>'
+        f'</div>',
+        unsafe_allow_html=True,
+    )
 
     # Build history list (role + content only, no metadata — for the LLM)
     history = [
