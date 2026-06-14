@@ -10,13 +10,13 @@ maintaining an authentic friendly conversational tone and preventing hallucinati
 
 | Feature | Status |
 |---|---|
-| FR-01 Product inquiry (catalog + stock) | 🔲 Sprint 1 |
-| FR-02 FAQ handling (hours, payment, shipping, returns) | 🔲 Sprint 1 |
-| FR-03 Order tracking (simulated tracking lookup) | 🔲 Sprint 2 |
-| FR-04 Cross-sell on out-of-stock variants | 🔲 Sprint 2 |
-| FR-05 Human handoff / escalation | 🔲 Sprint 2 |
-| FR-06 Multi-turn conversation context | 🔲 Sprint 2 |
-| FR-07 Conversation logging | 🔲 Sprint 3 |
+| FR-01 Product inquiry (catalog + stock) | ✅ Done |
+| FR-02 FAQ handling (hours, payment, shipping, returns) | ✅ Done |
+| FR-03 Order tracking (simulated tracking lookup) | ✅ Done |
+| FR-04 Cross-sell on out-of-stock variants | ✅ Done |
+| FR-05 Human handoff / escalation | ✅ Done |
+| FR-06 Multi-turn conversation context | ✅ Done |
+| FR-07 Conversation logging | ✅ Done |
 
 ---
 
@@ -111,9 +111,3 @@ pytest tests/ -v
 | Embeddings | sentence-transformers/all-MiniLM-L6-v2 | Local semantic retrieval without OpenAI |
 
 ---
-
-## Deliverables
-
-1. ✅ This working prototype (web-based chat app)
-2. 🔲 Demo video (3–5 min screen recording, see `docs/`)
-3. 🔲 Business impact document (`docs/business_impact.md`)
