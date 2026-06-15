@@ -23,7 +23,11 @@ Environment variables: loaded from .env via python-dotenv at startup.
 
 from __future__ import annotations
 
+# --- SQLite3 hot-swap for Streamlit Cloud (ChromaDB requirement) ---
+__import__('pysqlite3')
 import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 import uuid
 from pathlib import Path
 

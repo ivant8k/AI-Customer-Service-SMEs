@@ -6,6 +6,7 @@ langchain-community==0.2.16
 
 # --- Vector Store (local, no extra infra) ---
 chromadb==0.5.15
+pysqlite3-binary==0.5.4
 
 # --- LLM Provider ---
 groq==0.11.0
